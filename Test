@@ -20,7 +20,6 @@ local Tab = Window:MakeTab({
 -- Create a toggle for "Rendering" and configure its settings for saving
 local renderingToggle = Tab:AddToggle({
     Name = "Rendering",
-    Default = true,
     Flag = "RenderingToggle",  -- Unique identifier for this setting
     Save = true,  -- Enable saving this setting
     Callback = function(Value)
