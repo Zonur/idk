@@ -1,0 +1,68 @@
+-- Load the Orion library
+wait(2.5)
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+-- Create a window with automatic settings saving
+local Window = OrionLib:MakeWindow({
+    Name = "My Custom UI",
+    HidePremium = false,
+    SaveConfig = true,  -- Enable automatic settings saving
+    ConfigFolder = "OrionTest"
+})
+
+-- Create a tab
+local Tab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+-- Create a toggle for "Rendering" and configure its settings for saving
+local renderingToggle = Tab:AddToggle({
+    Name = "Rendering",
+    Default = false,
+    Flag = "RenderingToggle",  -- Unique identifier for this setting
+    Save = true,  -- Enable saving this setting
+    Callback = function(Value)
+        if Value then
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
+        else
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
+        end
+    end
+})
+
+
+-- Create a button for "Elemental Dungeons" without save settings
+Tab:AddButton({
+    Name = "Elemental Dungeons",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/xpa1n/Scripts/main/ElementalDungeons.lua"))()
+    end
+})
+
+-- Create a button for "Press K" without save settings
+Tab:AddButton({
+    Name = "Press K",
+    Callback = function()
+        local input = Instance.new("InputObject")
+        input.UserInputType = Enum.UserInputType.Keyboard
+        input.KeyCode = Enum.KeyCode.K
+
+        game:GetService("UserInputService").InputBegan:Fire(input)
+        wait(0.1)  -- Adjust delay if needed
+        game:GetService("UserInputService").InputEnded:Fire(input)
+    end
+})
+
+-- Create a button for "Destroy" without save settings
+Tab:AddButton({
+    Name = "Destroy",
+    Callback = function()
+        -- Destroy the UI and unload it
+        OrionLib:Destroy()
+    end
+})
+
+-- Initialize the Orion Lib UI
+OrionLib:Init()
